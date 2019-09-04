@@ -22,4 +22,14 @@ return false.
 const gapfulNum = (n) => {
     let strNum = n.toString();
     let eachNumChar = strNum.split('');
+    let firstAndLastNum = parseInt(eachNumChar[0] + eachNumChar[eachNumChar.length - 1])
+    // console.log(typeof firstAndLastNum);
+    if (n % firstAndLastNum == 0) {
+      return true;
+    }
+    return false;
 }
+
+console.log(gapfulNum(192)) // true
+console.log(gapfulNum(583)) // true
+console.log(gapfulNum(210)) // false
