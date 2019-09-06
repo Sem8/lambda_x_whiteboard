@@ -18,8 +18,19 @@
 // };
 
 // 2nd solution O(n^2):
-const longestCommonPrefix = (arr) => {
-    
+const longestCommonPrefix = (strArr) => {
+    let longestPrefix = '';
+    if (strArr.length > 0) {
+        longestPrefix = strArr[0];
+    }
+    for (let i = 0; i < strArr.length; i++) {
+        for (let j = 0; j < longestPrefix.length; j++) {
+            if (strArr[i][j] != longestPrefix[j]) {
+                longestPrefix = longestPrefix.slice(0, j);
+            }
+        }
+    }
+    return longestPrefix;
 }
 
 console.log(longestCommonPrefix(["internetly", "internet", "internets"]));
