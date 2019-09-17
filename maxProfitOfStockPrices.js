@@ -19,31 +19,28 @@ current array item is less than the first array item then the current array item
 9) After for loop finishes make if statement where if maxProfit is less than 0 then return 0, otherwise return maxProfit.  
 */
 
-const getMaxProfit = stockPricesArr => {
-  if (stockPricesArr.length < 2) {
-    throw new Error('Not enough stock prices');
-  } 
+// const getMaxProfit = stockPricesArr => {
+//   if (stockPricesArr.length < 2) {
+//     throw new Error('Not enough stock prices');
+//   }
 
-  let minPrice = stockPricesArr[0];
-  let maxProfit = stockPricesArr[1] - stockPricesArr[0];
+//   let minPrice = stockPricesArr[0];
+//   let maxProfit = stockPricesArr[1] - stockPricesArr[0];
 
-  for (let i = 1; i < stockPricesArr.length; i++) {
-    let currentPrice = stockPricesArr[i];
-    let potentialProfit = currentPrice - minPrice;
-    maxProfit = Math.max(maxProfit, potentialProfit);
-    minPrice = Math.min(minPrice, currentPrice);
-  }
+//   for (let i = 1; i < stockPricesArr.length; i++) {
+//     let currentPrice = stockPricesArr[i];
+//     let potentialProfit = currentPrice - minPrice;
+//     maxProfit = Math.max(maxProfit, potentialProfit);
+//     minPrice = Math.min(minPrice, currentPrice);
+//   }
 
-  if (maxProfit < 0) {
-    return 0;
-  }
-  return maxProfit;
-}
-
-
+//   if (maxProfit < 0) {
+//     return 0;
+//   }
+//   return maxProfit;
+// }
 
 // Solution 1:
-
 // function getMaxProfit(stockPrices) {
 //   //Have a check to make sure at least two numbers in the array of stockPrices here:
 // if (stockPrices.length < 2) {
@@ -52,7 +49,7 @@ const getMaxProfit = stockPricesArr => {
 //   // initialize minPrice and maxProfit to the first price(index zero) and the first possible profit here:
 //  let minPrice = stockPrices[0]
 //  let maxProfit = stockPrices[1] - stockPrices[0]
-// //loop through the array to check current price 
+// //loop through the array to check current price
 // // Start at the second (index 1) time
 //   // We can't sell at the first time, since we must buy first,
 //   // and we can't buy and sell at the same time!
@@ -71,37 +68,61 @@ const getMaxProfit = stockPricesArr => {
 //   } else return maxProfit;
 // }
 
-const stockPrices = [12, 9, 8, 7];
-console.log(getMaxProfit(stockPrices));
-console.log(getMaxProfit([45, 24, 35, 31, 40, 38, 11]))
+// const stockPrices = [12, 9, 8, 7];
+// console.log(getMaxProfit(stockPrices));
+// console.log(getMaxProfit([45, 24, 35, 31, 40, 38, 11]))
 
+// Solution 2: Less efficient with O(n^2) time complexity
+/* Solution 2 pseudocode
+1. Initialize a maxProfit variable and set it equal to 0
+2. loop through the array, starting at first element, ending at one element before last (because second for loop ends at last element)
+3. Make a second inner for loop inside the first for loop, this time starting at second array element (index 1) and end at last element
+4. Get the difference between the current element in the inner loop minus the element before current from the outer loop.
+5. If difference between inner loop current element and element before current from outer loop is greater than maxProfit, reset
+current maxProfit to this difference. 
+6. Return maxProfit outside for loop.
+ */
 
-// Solution 2:
+const getMaxProfit = stockPricesArr => {
+  if (stockPricesArr.length < 2) {
+    throw new Error('Not enough stock prices to get any profit');    
+  }
+
+  let maxProfit = 0;
+
+  for (let i = 0; i < stockPricesArr.length -1; i++) {
+    for (let j = i+1; j < stockPricesArr.length; j++) {
+      if (stockPricesArr[j] - stockPricesArr[i] > maxProfit) {
+        maxProfit = stockPricesArr[j] - stockPricesArr[i];
+      }
+    }
+  }
+  return maxProfit;
+}
 
 // function getMaxProfit(stockPrices) {
 //   //Have a check to make sure at least two numbers in the array of stockPrices here:
-// if (stockPrices.length < 2) {
-//   throw new Error('Not enough stockPrices')
-// }
+//   if (stockPrices.length < 2) {
+//     throw new Error("Not enough stockPrices");
+//   }
 //   // initialize minPrice and maxProfit to the first price(index zero) and the first possible profit here:
-//  let  maxProfit = 0
-// //loop through the array to check current price 
-// // Start at the second (index 1) time
+//   let maxProfit = 0;
+//   //loop through the array to check current price
+//   // Start at the second (index 1) time
 //   // We can't sell at the first time, since we must buy first,
 //   // and we can't buy and sell at the same time!
 //   // If we started at index 0, we'd try to buy *and* sell at time 0.
-//  // See what our profit would be if we bought at the min price and sold at the current price
+//   // See what our profit would be if we bought at the previous price and sold at the current price
 //   // Update maxProfit if we can do better
-//   // Update minPrice so it's always
-//     // the lowest price we've seen so far
-//   for (let i = 0; i < stockPrices.length-1; i++) {
-//   for (let j = i+1; j < stockPrices.length; j++) {
-//     if (stockPrices[j] - stockPrices[i] > maxProfit) {
-//       maxProfit = stockPrices[j] - stockPrices[i]
+//   for (let i = 0; i < stockPrices.length - 1; i++) {
+//     for (let j = i + 1; j < stockPrices.length; j++) {
+//       if (stockPrices[j] - stockPrices[i] > maxProfit) {
+//         maxProfit = stockPrices[j] - stockPrices[i];
+//       }
 //     }
 //   }
-//   }
-//   return maxProfit
+//   return maxProfit;
 // }
-// const stockPrices = [14, 12, 10, 8];
-// getMaxProfit(stockPrices);
+const stockPrices = [14, 12, 10, 8];
+console.log(getMaxProfit(stockPrices));
+console.log(getMaxProfit([45, 24, 35, 31, 40, 38, 11]))
