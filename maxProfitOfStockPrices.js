@@ -19,26 +19,26 @@ current array item is less than the first array item then the current array item
 9) After for loop finishes make if statement where if maxProfit is less than 0 then return 0, otherwise return maxProfit.  
 */
 
-// const getMaxProfit = stockPricesArr => {
-//   if (stockPricesArr.length < 2) {
-//     throw new Error('Not enough stock prices');
-//   }
+const getMaxProfit = stockPricesArr => {
+  if (stockPricesArr.length < 2) {
+    throw new Error('Not enough stock prices');
+  }
 
-//   let minPrice = stockPricesArr[0];
-//   let maxProfit = stockPricesArr[1] - stockPricesArr[0];
+  let minPrice = stockPricesArr[0];
+  let maxProfit = stockPricesArr[1] - stockPricesArr[0];
 
-//   for (let i = 1; i < stockPricesArr.length; i++) {
-//     let currentPrice = stockPricesArr[i];
-//     let potentialProfit = currentPrice - minPrice;
-//     maxProfit = Math.max(maxProfit, potentialProfit);
-//     minPrice = Math.min(minPrice, currentPrice);
-//   }
+  for (let i = 1; i < stockPricesArr.length; i++) {
+    let currentPrice = stockPricesArr[i];
+    let potentialProfit = currentPrice - minPrice;
+    maxProfit = Math.max(maxProfit, potentialProfit);
+    minPrice = Math.min(minPrice, currentPrice);
+  }
 
-//   if (maxProfit < 0) {
-//     return 0;
-//   }
-//   return maxProfit;
-// }
+  if (maxProfit < 0) {
+    return 0;
+  }
+  return maxProfit;
+}
 
 // Solution 1:
 // function getMaxProfit(stockPrices) {
