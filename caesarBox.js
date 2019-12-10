@@ -24,7 +24,7 @@ Input: inputString: "sixteenletters16"
 Expected Output: "seerietsxnt1tle6"
  */
 
-// My solution:
+// My first-pass solution: time complexity - O(n^2 + 2n);
 /*Pseudocode:
 1. Get the length of the input string, set it equal to variable called len
 2. Square root the length of input string using Math.sqrt method, set it to a variable called maxLen
@@ -47,7 +47,6 @@ innerIndex
 innerIndex then increment outerIndex.
 18. Make an if statement of if outerIndex reaches more than maxLen minus 1 then re-set outerIndex to 0 and increment innerIndex by 1.
 19. Return finalStr.
-
  */
 
 let caesarBox = inpStr => {
@@ -96,6 +95,32 @@ let caesarBox = inpStr => {
     };
     return finalStr;
 };
+
+
+
+// Suggested solution: time complexity O(n * sq. root n) --> O(n)
+/*Pseudocode:
+1. Get the square root of the length of the input string using Math.sqrt method and set it equal to a variable called squareLen
+2. Decalere an empty string, set it equal to a variable called finalStr
+3. Make a for loop, starting at index i of 0, ending at less than squareLen and increment i by 1.
+4. Make a nested for loop, inside of previous for loop, starting at index j of i, ending at less than input string length, increment j by 
+squareLen amount
+5. Inside inner for loop, set finalStr plus equal to input string (inputStr) at index j
+6. Outside both for loops, return finalStr 
+ */
+
+const caesarBox = inpStr => {
+    let squareLen = Math.sqrt(inpStr.length);
+    let finalStr = '';
+
+    for (let i = 0; i < squareLen; i++) {
+        for (let j = i; j < inpStr.length; j += squareLen) {
+            finalStr += inpStr[j];
+        };        
+    };
+    return finalStr;
+};
+
 
 
 // caesarBox('a message');
