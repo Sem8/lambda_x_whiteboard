@@ -85,7 +85,7 @@ increment value from 0 to 1 since the key now exists).
 //   }
 // };
 
-// Hackerrank suggested Solution 1:
+// Hackerrank suggested Solution 1: Time complexity - O(2n) in worst case
 /* Pseudocode:
 1. Declare a variable called nodeA which will be a pointer to headA input.
 2. Declare a variable called nodeB which will be a pointer to headB input.
@@ -101,26 +101,59 @@ setting nodeB to nodeB.next
 8. Outside the above while statement, return the nodeB.data which stopped at the node where it existed in the array of nodes from first headA
 linked list   
  */
+// function findMergeNode(headA, headB) {
+//   let nodeA = headA;
+//   let nodeB = headB;
+//   let arr = [];
+
+//   while (nodeA) {
+//     arr.push(nodeA);
+//     nodeA = nodeA.next;
+//   };
+
+//   while (nodeB) {
+//     if (arr.includes(nodeB)) {
+//       break;
+//     };
+//     nodeB = nodeB.next;
+//   };
+//   return nodeB.data;
+// };
+
+// Hackerrank suggested solution 2:  Time complexity O(n)
+/*Pseudocode:
+1. Declare a variable called nodeA and set it equal to input headA so it'll serve as a pointer for headA and 1st linked list
+2. Decalre a variable called nodeB and set it equal to input headB so it'll serve as a pointer to headB and to 2nd linked list.
+3. Make a while loop of while nodeA does not equal equal nodeB
+4. Inside while loop, make an if statement of if nodeA.next equals equals null (we've reached end of linked list A) then reset nodeA pointer
+to headB (start from second linked list now).
+5. Else (if we haven't reached end of linked list A yet) then set nodeA to nodeA.next to move through the linked list.
+6. Outside else statement, make another if statement, check if nodeB.next equals equals null (we have reached end of linked list B first) then
+reset linked list B pointer nodeB to headA (to start iterating through the other linked list).
+7. Else (if we haven't reached end of linked list B yet) then set nodeB to nodeB.next to iterate through linked list B. The while loop will 
+stop as soon as a node from first linked list equals a node from the 2nd nodeB linked list
+8. Outside while loop, return nodeB.data to return the node where the while loop broke when the node from both linked lists became equal
+ */
+
 function findMergeNode(headA, headB) {
     let nodeA = headA;
     let nodeB = headB;
-    let arr = [];
 
-    while(nodeA) {
-        arr.push(nodeA);
-        nodeA = nodeA.next;
+    while (nodeA !== nodeB) {
+        if (nodeA.next == null) {
+            nodeA = headB;
+        } else {
+            nodeA = nodeA.next;
+        };
+
+        if (nodeB.next == null) {
+            nodeB = headA;
+        } else {
+            nodeB = nodeB.next;
+        };
     };
-    
-    while (nodeB) {
-        if (arr.includes(nodeB)) {
-            break;
-        }
-        nodeB = nodeB.next;
-    }
     return nodeB.data;
 };
-
-
 
 let a = new SinglyLinkedList();
 a.insertNode(1);
