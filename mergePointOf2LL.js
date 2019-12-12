@@ -58,32 +58,69 @@ increment value from 0 to 1 since the key now exists).
 11. Inside for in loop, make an if statement of if value of nextVal key in the nextNodeVal object is 2 then return that value
  */
 
-function findMergeNode(headA, headB) {
-  let nodeA = headA;
-  let nodeB = headB;
-  let nextNodeVal = {};
+// function findMergeNode(headA, headB) {
+//   let nodeA = headA;
+//   let nodeB = headB;
+//   let nextNodeVal = {};
 
-  while (nodeA.next) {
-    if (!nextNodeVal[nodeA.next.data]) {
-      nextNodeVal[nodeA.next.data] = 0;
+//   while (nodeA.next) {
+//     if (!nextNodeVal[nodeA.next.data]) {
+//       nextNodeVal[nodeA.next.data] = 0;
+//     }
+//     nextNodeVal[nodeA.next.data]++;
+//     nodeA = nodeA.next;
+//   }
+//   while (nodeB.next) {
+//     if (!nextNodeVal[nodeB.next.data]) {
+//       nextNodeVal[nodeB.next.data] = 0;
+//     }
+//     nextNodeVal[nodeB.next.data]++;
+//     nodeB = nodeB.next;
+//   }
+//   // console.log(nextNodeVal);
+//   for (let nextVal in nextNodeVal) {
+//     if (nextNodeVal[nextVal] === 2) {
+//       return nextVal;
+//     }
+//   }
+// };
+
+// Hackerrank suggested Solution 1:
+/* Pseudocode:
+1. Declare a variable called nodeA which will be a pointer to headA input.
+2. Declare a variable called nodeB which will be a pointer to headB input.
+3. Initialize an empty array, call it arr.
+4. Make a while loop of while nodeA exists
+5. Inside previous while loop, push the current node at current iteration, nodeA into the arr array and then set nodeA to nodeA.next to move
+through the linked list
+6. Outside previous while loop, make another while loop of while nodeB exists
+7. Inside this 2nd while loop make an if statement of if nodeB exists in the arr array using array includes method then declare break to end
+the while loop.
+8. Otherwise, (if the current node at current iteration does not exist in the arr array from includes method) then go on to the next node by
+setting nodeB to nodeB.next
+8. Outside the above while statement, return the nodeB.data which stopped at the node where it existed in the array of nodes from first headA
+linked list   
+ */
+function findMergeNode(headA, headB) {
+    let nodeA = headA;
+    let nodeB = headB;
+    let arr = [];
+
+    while(nodeA) {
+        arr.push(nodeA);
+        nodeA = nodeA.next;
+    };
+    
+    while (nodeB) {
+        if (arr.includes(nodeB)) {
+            break;
+        }
+        nodeB = nodeB.next;
     }
-    nextNodeVal[nodeA.next.data]++;
-    nodeA = nodeA.next;
-  }
-  while (nodeB.next) {
-    if (!nextNodeVal[nodeB.next.data]) {
-      nextNodeVal[nodeB.next.data] = 0;
-    }
-    nextNodeVal[nodeB.next.data]++;
-    nodeB = nodeB.next;
-  }
-  // console.log(nextNodeVal);
-  for (let nextVal in nextNodeVal) {
-    if (nextNodeVal[nextVal] === 2) {
-      return nextVal;
-    }
-  }
+    return nodeB.data;
 };
+
+
 
 let a = new SinglyLinkedList();
 a.insertNode(1);
