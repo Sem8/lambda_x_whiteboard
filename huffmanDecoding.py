@@ -60,25 +60,53 @@ does not exist
 and if value of s at index idx is 0 then set current to current.left and increment idx by 1
 '''
 
+# def decodeHuff(root, s):
+#     current = root
+#     idx = 0
+#     finalStr = ''
+
+#     while idx < len(s):
+#         if s[idx] == '1':
+#             current = current.right
+#             idx += 1
+
+#             if (current.left is None) and (current.right is None):
+#                 finalStr += current.data
+#                 current = root
+            
+#         if s[idx] == '0':       
+#             current = current.left
+#             idx += 1
+#             if (current.left is None) and (current.right is None):
+#                 finalStr += current.data
+#                 current = root
+            
+#     return finalStr
+
+# Suggested solution:
+''' Pseudocode:
+1. Declare a variable called current and set it equal to root to serve as a pointer
+2. Declare an empty string, call is finalStr
+3. Make a for in loop to loop through each element in the input coded string, s, call each element in the input string s, char
+4. Make an if statement of if char is equal to string version of 1 then go right by setting current to current.right
+5. Outside previous if statement, make another if statement of if char is equal to string version of 0 then go left by setting current to 
+current.left
+6. Outside previous if statement, make another if statement of if current.data is not equal to '\0' then set finalStr to plus equal 
+current.data
+7. Still inside the above if statement, re-set current to root once a data value of a node has been added to finalStr
+8. Outside for in loop, print finalStr 
+'''
 def decodeHuff(root, s):
     current = root
-    idx = 0
     finalStr = ''
 
-    while idx < len(s):
-        if s[idx] == '1':
+    for char in s:
+        if char == '1':
             current = current.right
-            idx += 1
-
-            if (current.left is None) and (current.right is None):
-                finalStr += current.data
-                current = root
-            
-        if s[idx] == '0':       
+        if char == '0':
             current = current.left
-            idx += 1
-            if (current.left is None) and (current.right is None):
-                finalStr += current.data
-                current = root
-            
-    return finalStr
+        if current.data != '\0':
+            finalStr += current.data
+            current = root
+    print(finalStr)
+    
