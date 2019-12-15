@@ -1,3 +1,16 @@
+# def lca(root, v1, v2):
+#     if v1 < root.info and v2 < root.info:
+#         # traverse to the left 
+#         if root.left:
+#             return lca(root.left, v1, v2) 
+#     elif v1 > root.info and v2 > root.info:
+#         # traverse to the right 
+#         if root.right:
+#             return lca(root.right, v1, v2)
+#     # otherwise, v1 and v2 are on opposite sides and we've 
+#     # found the lca 
+#     return root
+
 class Node:
     def __init__(self, info): 
         self.info = info  
@@ -60,58 +73,63 @@ then append current into the v2_arr list then set current to current.right to it
 and if so then return that node at the current index
 15. Otherwise (if there are no common elements between v1_arr and v2_arr) then outside for in loop just return the input root node
 '''
-
-def lca(root, v1, v2):
-    v1_arr = []
-    v2_arr = []
-
-    if v1 == root.info:
-        v1_arr.append(root)
-    if v2 == root.info:
-        v2_arr.append(root)
-
-    current = root
-    # print(current.info)
-    while (v1 != current.info) and current is not None:
-        if(v1 < current.info):
-            v1_arr.append(current)
-            current = current.left
-        if(v1 > current.info):
-            v1_arr.append(current)
-            current = current.right  
-
-    current = root
-
-    while (v2 != current.info) and current is not None:
-        if(v2 < current.info):
-            v2_arr.append(current)
-            current = current.left
-            
-        if (v2 > current.info):
-            v2_arr.append(current)
-            current = current.right
-            
-
-    for i in range(1, len(v1_arr)):
-        if v1_arr[i] in v2_arr:
-            return v1_arr[i]
-        # else:
-        #     return root
-    return root
-
-# Suggested solution:
 # def lca(root, v1, v2):
-#     if v1 < root.info and v2 < root.info:
-#         # traverse to the left 
-#         if root.left:
-#             return lca(root.left, v1, v2) 
-#     elif v1 > root.info and v2 > root.info:
-#         # traverse to the right 
-#         if root.right:
-#             return lca(root.right, v1, v2)
-#     # otherwise, v1 and v2 are on opposite sides and we've 
-#     # found the lca 
+#     v1_arr = []
+#     v2_arr = []
+
+#     if v1 == root.info:
+#         v1_arr.append(root)
+#     if v2 == root.info:
+#         v2_arr.append(root)
+
+#     current = root
+#     # print(current.info)
+#     while (v1 != current.info) and current is not None:
+#         if(v1 < current.info):
+#             v1_arr.append(current)
+#             current = current.left
+#         if(v1 > current.info):
+#             v1_arr.append(current)
+#             current = current.right  
+
+#     current = root
+
+#     while (v2 != current.info) and current is not None:
+#         if(v2 < current.info):
+#             v2_arr.append(current)
+#             current = current.left
+            
+#         if (v2 > current.info):
+#             v2_arr.append(current)
+#             current = current.right            
+
+#     for i in range(1, len(v1_arr)):
+#         if v1_arr[i] in v2_arr:
+#             return v1_arr[i]
+#         # else:
+#         #     return root
 #     return root
+
+# Suggested solution using recursion:
+''' Pseudocode:
+1. Make an if statement of if both input values v1 and v2 is less than root.info then inside this outer if statement, make an inner if 
+statement of if root.left exists then return the recursive call of the lca function but now passing in root.left as the root, and v1 and v2 as
+the other 2 parameters.
+2. Outside the 1st if statement, make another if statement of if both input values v1 and v2 are more than root.info then inside this outer 
+if statement, make an inner if statement of if root.right exists then return the recursive call of the lca function but now passing in 
+root.right as the root parameter, and pass in v1 and v2 as the other 2 parameters.
+3. Outside all if statements return, Otherwise (if v1 and v2 are both on different sides of the root) then just return root as the common 
+ancestor.
+'''
+def lca(root, v1, v2):
+    if v1 < root.info and v2 < root.info:
+        if root.left:
+            return lca(root.left, v1, v2)
+    
+    elif v1 > root.info and v2 > root.info:
+        if root.right:
+            return lca(root.right, v1, v2)
+    return root
 
 
 a = BinarySearchTree()
@@ -122,5 +140,5 @@ a.create(1)
 a.create(7)
 a.create(6)
 
-print(lca(a.root, 1, 7))
+print(lca(a.root, 1, 7)) # Should return 4
 # lca(a.root, 1, 7)
