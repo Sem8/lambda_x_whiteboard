@@ -53,62 +53,85 @@ and set it equal to node.prev then set prevNode.next to newNode.
 // Finished passing sample in 53 minutes (but with some hints)
 // Finished passing all tests in 1 hour 18 minutes (with solution code for hints)
 
+// function sortedInsert(head, data) {
+//   const newNode = new DoublyLinkedListNode(data);
+//   if (head.data > newNode.data) {
+//     head.prev = newNode;
+//     newNode.next = head;
+//     head = newNode;
+//     return head;
+//   }
+//   if (head == null) {
+//     return newNode;
+//   }
+//   let node = head;
+//   let prevNode;
+//   while (node) {
+//     if (node.next == null && newNode.data > node.data) {
+//       newNode.next = null;
+//       newNode.prev = node;
+//       node.next = newNode;
+//       break;
+//     }
+//     if (newNode.data <= node.data) {
+//       prevNode = node.prev;
+//       prevNode.next = newNode;
+//       newNode.prev = prevNode;
+//       newNode.next = node;
+//       break;
+//     }
+
+//     node = node.next;
+//   }
+//   return head;
+// };
+
+// Recursive solution (Suggested):
+/*Pseudocode:
+1. Declare a variable called newNode and set it equal to a new instantiation of a DoublyLinkedListNode, passing in input data as its value
+2. Make a base case of if head is equal to null (head does not exist) then just return newNode.
+3. Make another base case of if data is less than or equal to head.data then set newNode.next equal to head, then set head.prev to newNode and
+finally set head equal to newNode to re-set the head to be the newNode and then return newNode.
+4. Else (if data is more than head.data) then declare a variable called rest and set it equal to the recursive call of the sortedInsert 
+function, this time passing in head.next to be the head input and data to be the data input. (This will insert the newNode at head.next if 
+  there's only a head in the linked list, it'll insert newNode at the head.next place if newNode belongs as 2nd node in list or it'll keep 
+  iterating through list till it finds a node that's bigger than newNode)
+5. Next, (once recursive call of function is done and saved to a variable called rest) still inside else statement, set head.next equal to 
+rest, then set rest.prev equal to head and finally return head inside the else statement.
+ */
 function sortedInsert(head, data) {
-  const newNode = new DoublyLinkedListNode(data);
-  if (head.data > newNode.data) {
-    head.prev = newNode;
-    newNode.next = head;
-    head = newNode;
-    return head;
-  }
+  let newNode = new DoublyLinkedListNode(data);
+
   if (head == null) {
     return newNode;
   }
-  let node = head;
-  let prevNode;
-  while (node) {
-    if (node.next == null && newNode.data > node.data) {
-      newNode.next = null;
-      newNode.prev = node;
-      node.next = newNode;
-      break;
-    }
-    if (newNode.data <= node.data) {
-      prevNode = node.prev;
-      prevNode.next = newNode;
-      newNode.prev = prevNode;
-      newNode.next = node;
-      break;
-    }
-
-    node = node.next;
+  else if (data <= head.data) {
+    newNode.next = head;
+    head.prev = newNode;
+    head = newNode;
+    return newNode;
   }
-  return head;
-};
+  else {
+    let rest = sortedInsert(head.next, data);
+    head.next = rest;
+    rest.prev = head;
+    return head;
+  }
 
-// Recursive solution in Java:
-// Node SortedInsert(Node head,int data) {
-//     Node n = new Node();
-//     n.data = data;
-//     if (head == null) {
-//         return n;
-//     }
-//     else if (data <= head.data) {
-//         n.next = head;
-//         head.prev = n;
-//         return n;
-//     }
-//     else {
-//         Node rest = SortedInsert(head.next, data);
-//         head.next = rest;
-//         rest.prev = head;
-//         return head;
-//     }
-// }
+}
+
 
 let a = new DoublyLinkedList();
+// a.insertNode(1);
+// a.insertNode(2);
+// a.insertNode(3);
+// console.log(a);
+
 a.insertNode(1);
-a.insertNode(2);
-a.insertNode(3);
-console.log(a);
-// printDoublyLinkedList(a.head);
+// a.insertNode(5);
+// a.insertNode(7);
+// a.insertNode(9);
+
+printDoublyLinkedList(a.head);
+sortedInsert(a.head, 4);
+printDoublyLinkedList(a.head);

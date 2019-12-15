@@ -1,10 +1,10 @@
 class Stack:
   def __init__(self):
     self.storage = []
-​
+    
   def push(self, item):
     self.storage.append(item)
-​
+    
   def pop(self):
     return self.storage.pop()
 ​
