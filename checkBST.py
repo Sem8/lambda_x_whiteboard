@@ -4,7 +4,7 @@ class node:
         self.left = None
         self.right = None
 
-# My solution:
+# My solution: Doesn't pass all tests
     # If root is null return true
     # Set a pointer to root called current
     # while root.left exists then if root.left.data is is less than current.data then return true and set current to current.left
@@ -41,21 +41,47 @@ iterate and then return true.
 #             return False
 #         current = current.right
 
+
+
+# Suggested Solution 1:
 def checkBST(root):
-    # current = root
+    return(check_in_order(root,[-1]))
 
-    if root is None:
-        return True
+def check_in_order(root,prev):
+    result = True
+    if root.left is not None:
+        result &= check_in_order(root.left,prev)
+    if prev[0] >= root.data:
+        return False
+    prev[0] = root.data
+    if root.right is not None:
+        result &= check_in_order(root.right,prev)
+    return result
 
-    if root.left:
-        if root.left.data > root.data:
-            return False
-        else:
-            return checkBST(root.left)
+# Suggested Solution 2:
+def checkBST(root):
+    list_ = []
+    def inorder(node):
+        if node.data:
+            if node.left:
+                inorder(node.left)
+            list_.append(node.data)
+            if node.right:
+                inorder(node.right)
+        return list_
+    inorder_list = inorder(root)
+    return sorted(list(set(inorder_list))) == inorder_list
 
-    if root.right:
-        if root.right.data < root.data:
-            return False
-        else:
-            return checkBST(root.right)
-    
+# Suggested Solution 3:
+
+boolean checkBST(Node root) {
+	return check(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+}
+boolean check(Node n, int min, int max){
+	if(n==null)
+		return true;
+	if(n.data <= min || n.data >= max)
+		return false;
+	return check(n.left, min, n.data) 
+		&& check(n.right, n.data, max);
+}
