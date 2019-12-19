@@ -76,16 +76,20 @@ const smallestString = (str1, str2) => {
   if (parseInt(str1Num) > parseInt(str2Num)) {
     return str2;
   }
-  else {
-      idx++;
-  }
+//   else {
+//       idx++;
+//     // smallestString(str1, str2, idx)    
+//   }
 };
 
-/*Consle.log tests */
+/*Console.log tests */
 
 console.log(smallestString("a", "b"));      // a
 console.log(smallestString("a1", "a2"));    // a1
 console.log(smallestString("a10", "a2"));   // a2
+console.log(smallestString("abc123a", "abc123b"));  // should print "abc123a"
+console.log(smallestString("9876", "987"));         // should print "987"
+
 // smallestString("a10", "a2")
 
 // console.log(isNaN('a'));
