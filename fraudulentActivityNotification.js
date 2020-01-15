@@ -17,49 +17,57 @@
 
  */
 
-function activityNotifications(expenditure, d) {
-    let checkDayIdx = d;
-    let startPriceIdx = 0;
-    let notify = 0;
-    let medianCutoff;
-
-    while (checkDayIdx < expenditure.length) {
-        let endPriceIdx = checkDayIdx - 1
-        let expenditureWindow = [];        
-        
-        console.log('checkDayIdx', checkDayIdx);
-        
-        
-        for (let i = startPriceIdx; i <= endPriceIdx; i++) {
-            expenditureWindow.push(expenditure[i]);
-        };
-        expenditureWindow.sort((a, b) => a-b);
-        console.log('expenditureWindow', expenditureWindow);
-
-        // if odd num days
-        if (expenditureWindow.length % 2 == 1) {
-            medianCutoff = expenditureWindow[Math.floor(expenditureWindow.length / 2)] * 2;
-        };
-
-        // if even num of days
-        if (expenditureWindow.length % 2 == 0) {
-            medianCutoff = expenditureWindow[expenditureWindow.length / 2] + expenditureWindow[(expenditureWindow.length / 2) -1]
-        };
-        console.log('medianCutoff', medianCutoff);
-
-        if ( expenditure[checkDayIdx] >= medianCutoff ) {
-            notify++;
-        };
-
-        checkDayIdx++;
-        startPriceIdx++;
-        expenditureWindow = [];
-        medianCutoff = 0;
-    };
-
-    return notify;
-
+const getMedianCutoffHelper = (arr, d) => {
+  // if odd
+  if (d % 2 == 1) {
+    return arr[Math.floor(d / 2)] * 2;
+  }
+  return arr[d / 2] + arr[d / 2 - 1];
 };
 
-console.log(activityNotifications([2, 3, 4, 2, 3, 6, 8, 4, 5], 5));  // 2
-console.log(activityNotifications([1, 2, 3, 4, 4], 4));  // 0
+function activityNotifications(expenditure, d) {
+  let checkDayIdx = d;
+  let startPriceIdx = 0;
+  let notify = 0;
+  let medianCutoff;
+
+  while (checkDayIdx < expenditure.length) {
+    let endPriceIdx = checkDayIdx - 1;
+    let expenditureWindow = [];
+
+    console.log("checkDayIdx", checkDayIdx);
+
+    for (let i = startPriceIdx; i <= endPriceIdx; i++) {
+      expenditureWindow.push(expenditure[i]);
+    }
+    // console.log("expenditureWindow", expenditureWindow);
+    expenditureWindow.sort((a, b) => a - b);
+    // console.log('expenditureWindow', expenditureWindow);
+
+    // if odd num days
+    // if (expenditureWindow.length % 2 == 1) {
+    //     medianCutoff = expenditureWindow[Math.floor(expenditureWindow.length / 2)] * 2;
+    // };
+
+    // // if even num of days
+    // if (expenditureWindow.length % 2 == 0) {
+    //     medianCutoff = expenditureWindow[expenditureWindow.length / 2] + expenditureWindow[(expenditureWindow.length / 2) -1]
+    // };
+    medianCutoff = getMedianCutoffHelper(expenditureWindow, d);
+    console.log("medianCutoff", medianCutoff);
+
+    if (expenditure[checkDayIdx] >= medianCutoff) {
+      notify++;
+    }
+
+    checkDayIdx++;
+    startPriceIdx++;
+    // expenditureWindow = [];
+    medianCutoff = 0;
+  }
+
+  return notify;
+}
+
+console.log(activityNotifications([2, 3, 4, 2, 3, 6, 8, 4, 5], 5)); // 2
+console.log(activityNotifications([1, 2, 3, 4, 4], 4)); // 0
